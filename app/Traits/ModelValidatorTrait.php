@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * ModelValidator for the model validation fields
+ * PHP version 7.1.
+ *
+ * @category Model_validation
+ *
+ * @author "SmithJunior <smith.junior@icloud.com>"
+ * @license MIT
+ */
+
+namespace App\Traits;
+
+use Illuminate\Support\Facades\Validator;
+
+trait ModelValidatorTrait
+{
+    public function validate($data)
+    {
+        // make a new validator object
+        $v = Validator::make($data, $this->rules);
+
+        // check for failure
+        if ($v->fails()) {
+            // set errors and return false
+            $this->errors = $v->errors();
+
+            return false;
+        }
+
+        // validation pass
+        return true;
+    }
+
+    public function errors()
+    {
+        return $this->errors;
+    }
+}
